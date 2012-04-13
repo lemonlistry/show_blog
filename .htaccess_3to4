@@ -1,0 +1,55 @@
+AddType application/xml .xml
+IndexIgnore *
+
+# redirect from v3 to v4
+RedirectMatch 301 /home/blog.php(.*)$ http://egg.epicdesigns.co.uk/news.php$1
+Redirect 301 /home/index.php http://egg.epicdesigns.co.uk/
+Redirect 301 /home/archive.php http://egg.epicdesigns.co.uk/articles.php
+Redirect 301 /home/archive.php http://egg.epicdesigns.co.uk/articles.php
+Redirect 301 /admin/ http://egg.epicdesigns.co.uk/admin.php
+Redirect 301 /forum/index.php http://egg.epicdesigns.co.uk/forum.php
+Redirect 301 /forum/forgot.php http://egg.epicdesigns.co.uk/forgot.php
+Redirect 301 /forum/register.php http://egg.epicdesigns.co.uk/register.php
+Redirect 301 /rss/topics.php http://egg.epicdesigns.co.uk/rss.php?id=1
+Redirect 301 /rss/blog.php http://egg.epicdesigns.co.uk/rss.php?id=0
+Redirect 301 /rss/ http://egg.epicdesigns.co.uk/rss.php?id=0
+Redirect 301 /home/about.php http://egg.epicdesigns.co.uk/
+Redirect 301 /home/search.php http://egg.epicdesigns.co.uk/
+Redirect 301 /home/rss.php http://egg.epicdesigns.co.uk/
+Redirect 301 /home/ http://egg.epicdesigns.co.uk/
+
+RewriteEngine on
+RewriteBase /
+
+# Redirect forum topics
+RewriteCond %{query_STRING} ^id=(.*)$
+RewriteRule ^forum/topic\.php$ http://egg.epicdesigns.co.uk/forum.php?topic=%1 [R=301,L]
+
+# Redirect photo albums
+RewriteCond %{query_STRING} ^id=(.*)$
+RewriteRule ^photos/category\.php$ http://egg.epicdesigns.co.uk/photos.php?album=%1 [R=301,L]
+
+# Redirect photo albums
+RewriteCond %{query_STRING} ^id=(.*)$
+RewriteRule ^photos/photo\.php$ http://egg.epicdesigns.co.uk/photos.php?photo=%1 [R=301,L]
+
+# Block access to/from the following
+RewriteCond %{HTTP_USER_AGENT} ^Mozilla.*NEWT [OR]
+RewriteCond %{HTTP_USER_AGENT} ^MSFrontPage [OR]
+RewriteCond %{HTTP_USER_AGENT} ^[Ww]eb[Bb]andit [OR]
+RewriteCond %{HTTP_USER_AGENT} ^Mozilla.*Indy [OR]
+RewriteCond %{HTTP_USER_AGENT} ^Zeus.*Webster [OR]
+RewriteCond %{HTTP_USER_AGENT} ^Microsoft.URL [OR]
+RewriteCond %{HTTP_USER_AGENT} ^Wget [OR]
+RewriteCond %{HTTP_USER_AGENT} ^sitecheck.internetseer.com [OR]
+RewriteCond %{HTTP_USER_AGENT} ^InternetSeer.com [OR]
+RewriteCond %{HTTP_USER_AGENT} ^Ping [OR]
+RewriteCond %{HTTP_USER_AGENT} ^Link [OR]
+RewriteCond %{HTTP_USER_AGENT} ^ia_archiver [OR]
+RewriteCond %{HTTP_USER_AGENT} ^DIIbot [OR]
+RewriteCond %{HTTP_USER_AGENT} ^psbot [OR]
+RewriteCond %{HTTP_USER_AGENT} ^EmailCollector [OR]
+RewriteCond %{REQUEST_URI} _vti_bin [OR]
+RewriteCond %{REQUEST_URI} _vti_inf.html [OR]
+RewriteCond %{REQUEST_URI} MSOffice
+RewriteRule ^.* - [F]
